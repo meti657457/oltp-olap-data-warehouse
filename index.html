@@ -20,3 +20,186 @@
     <p>Example: A company stores sales data from many years.</p>
 </body>
 </html>
+[10/22/2026 10:41 AM] Meti Yad: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLTP, OLAP and Data Warehouse</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #222; background: #f4f6fa; }
+    header { background: #1f3a68; color: #fff; padding: 28px 20px; text-align: center; }
+    header h1 { margin: 0 0 6px; font-size: 1.9rem; }
+    header p { margin: 0; opacity: .85; }
+    nav { background: #16294b; position: sticky; top: 0; text-align: center; z-index: 10; }
+    nav a { display: inline-block; color: #fff; text-decoration: none; padding: 12px 16px; font-size: .95rem; }
+    nav a:hover { background: #2d5aa8; }
+    main { max-width: 900px; margin: 0 auto; padding: 20px; }
+    section { background: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    h2 { color: #1f3a68; border-bottom: 2px solid #2d5aa8; padding-bottom: 6px; margin-top: 0; }
+    h3 { color: #2d5aa8; margin-bottom: 4px; }
+    .example { background: #eaf2ff; border-left: 4px solid #2d5aa8; padding: 8px 12px; margin: 10px 0; border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #c8d0e0; padding: 10px; text-align: left; }
+    th { background: #1f3a68; color: #fff; }
+    tr:nth-child(even) td { background: #f2f5fb; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin: 16px 0; }
+    .box { background: #2d5aa8; color: #fff; padding: 12px 14px; border-radius: 6px; text-align: center; min-width: 120px; font-weight: bold; font-size: .9rem; }
+    .box small { display: block; font-weight: normal; opacity: .9; }
+    .box.green { background: #2e8b57; }
+    .box.orange { background: #d9822b; }
+    .arrow { font-size: 1.6rem; color: #1f3a68; font-weight: bold; }
+    .star { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 8px; align-items: center; margin: 14px 0; }
+    .star .fact { background: #d9822b; color: #fff; padding: 14px; border-radius: 6px; text-align: center; font-weight: bold; }
+    .star .dim { background: #e3ebf9; border: 1px solid #2d5aa8; padding: 10px; border-radius: 6px; text-align: center; }
+    ul { padding-left: 22px; }
+    footer { text-align: center; padding: 18px; color: #555; font-size: .9rem; }
+    @media (max-width: 600px) { .arrow { transform: rotate(90deg); } .star { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>OLTP, OLAP and Data Warehouse</h1>
+  <p>Understanding how organizations process and analyze data</p>
+</header>
+
+<nav>
+  <a href="#intro">Introduction</a>
+  <a href="#oltp">OLTP</a>
+  <a href="#olap">OLAP</a>
+  <a href="#compare">Comparison</a>
+  <a href="#dw">Data Warehouse</a>
+  <a href="#conclusion">Conclusion</a>
+</nav>
+
+<main>
+
+  <section id="intro">
+    <h2>Introduction</h2>
+    <p>Organizations produce huge amounts of data every day. Some systems are built to record this data quickly and correctly (OLTP), others to analyze it and support decisions (OLAP), and a data warehouse is the central place where historical data from many sources is stored for analysis.</p>
+  </section>
+
+  <section id="oltp">
+    <h2>1. OLTP (Online Transaction Processing)</h2>
+    <p>OLTP processes daily transactions.</p>
+    <div class="example"><strong>Example:</strong> ATM money withdrawal.</div>
+    <h3>Characteristics</h3>
+    <ul>
+      <li>Very fast response for small, simple queries (insert, update, delete).</li>
+      <li>Supports many users at the same time.</li>
+      <li>Stores current, detailed data.</li>
+      <li>Highly normalized database to avoid duplication and keep accuracy.</li>
+    </ul>
+    <h3>Typical users</h3>
+    <p>Bank tellers, cashiers, booking clerks, customers.</p>
+    <h3>More examples</h3>
+    <ul>
+      <li>Online shopping orders</li>
+      <li>Airline ticket reservation</li>
+      <li>Student registration</li>
+    </ul>
+  </section>
+[10/22/2026 10:41 AM] Meti Yad: <section id="olap">
+    <h2>2. OLAP (Online Analytical Processing)</h2>
+    <p>OLAP analyzes large amounts of data.</p>
+    <div class="example"><strong>Example:</strong> Analyzing yearly sales.</div>
+    <h3>Characteristics</h3>
+    <ul>
+      <li>Handles complex queries over huge historical data.</li>
+      <li>Used by a small number of analysts and managers.</li>
+      <li>Mostly read operations (few updates).</li>
+      <li>Supports multidimensional analysis: roll-up, drill-down, slice, dice, pivot.</li>
+    </ul>
+    <h3>Typical users</h3>
+    <p>Data analysts, managers, executives.</p>
+    <h3>More examples</h3>
+    <ul>
+      <li>Comparing sales by region and year</li>
+      <li>Forecasting next quarter's demand</li>
+      <li>Customer behavior analysis</li>
+    </ul>
+  </section>
+
+  <section id="compare">
+    <h2>OLTP vs OLAP</h2>
+    <table>
+      <tr><th>Feature</th><th>OLTP</th><th>OLAP</th></tr>
+      <tr><td>Purpose</td><td>Run daily operations</td><td>Analysis and decision support</td></tr>
+      <tr><td>Data</td><td>Current, detailed</td><td>Historical, summarized</td></tr>
+      <tr><td>Data size</td><td>Megabytes to gigabytes</td><td>Gigabytes to terabytes</td></tr>
+      <tr><td>Queries</td><td>Simple, short</td><td>Complex, long</td></tr>
+      <tr><td>Operations</td><td>Insert, update, delete</td><td>Mostly read (select)</td></tr>
+      <tr><td>Users</td><td>Many (clerks, customers)</td><td>Few (analysts, managers)</td></tr>
+      <tr><td>Speed</td><td>Very fast per transaction</td><td>Slower, heavy processing</td></tr>
+      <tr><td>Database design</td><td>Normalized (ER model)</td><td>Denormalized (star / snowflake schema)</td></tr>
+      <tr><td>Example</td><td>ATM withdrawal</td><td>Yearly sales analysis</td></tr>
+    </table>
+  </section>
+
+  <section id="dw">
+    <h2>3. Data Warehouse</h2>
+    <p>A data warehouse stores integrated historical data.</p>
+    <div class="example"><strong>Example:</strong> A company stores sales data from many years.</div>
+
+    <h3>Main features</h3>
+    <ul>
+      <li><strong>Subject-oriented:</strong> organized around topics such as sales or customers.</li>
+      <li><strong>Integrated:</strong> data from many sources is made consistent.</li>
+      <li><strong>Time-variant:</strong> keeps historical data over time.</li>
+      <li><strong>Non-volatile:</strong> data is not changed or deleted once loaded.</li>
+    </ul>
+
+    <h3>Data warehouse process</h3>
+    <div class="flow">
+      <div class="box">Data Sources<small>OLTP, files, web</small></div>
+      <div class="arrow">&rarr;</div>
+      <div class="box orange">ETL<small>Extract, Transform, Load</small></div>
+      <div class="arrow">&rarr;</div>
+      <div class="box green">Data Warehouse<small>Integrated history</small></div>
+      <div class="arrow">&rarr;</div>
+      <div class="box">OLAP / BI Tools<small>Reports, dashboards</small></div>
+    </div>
+
+    <h3>ETL</h3>
+    <ul>
+      <li><strong>Extract:</strong> collect data from the source systems.</li>
+      <li><strong>Transform:</strong> clean, convert and combine the data.</li>
+      <li><strong>Load:</strong> store the result in the data warehouse.</li>
+    </ul>
+
+    <h3>Star schema</h3>
+    <p>A central <em>fact table</em> (measurable data such as sales amount) connected to <em>dimension tables</em> (descriptive data such as time, product, customer, location).</p>
+    <div class="star">
+      <div class="dim">Time</div>
+      <div class="dim">Product</div>
+      <div class="dim">Customer</div>
+      <div class="dim">Location</div>
+      <div class="fact">Fact Table<br><small>Sales</small></div>
+      <div class="dim">Store</div>
+    </div>
+
+    <h3>Data mart</h3>
+    <p>A smaller part of a data warehouse built for one department, such as marketing or finance.</p>
+  </section>
+[10/22/2026 10:41 AM] Meti Yad: <section id="conclusion">
+    <h2>Conclusion</h2>
+    <p>OLTP systems record the day-to-day transactions of an organization, OLAP systems analyze large amounts of data to support decisions, and a data warehouse brings together historical data from many sources to make that analysis possible. Together they help organizations run their operations and make better decisions.</p>
+  </section>
+
+  <section id="references">
+    <h2>References</h2>
+    <ul>
+      <li>Han, J., Kamber, M., &amp; Pei, J. <em>Data Mining: Concepts and Techniques</em>.</li>
+      <li>Inmon, W. H. <em>Building the Data Warehouse</em>.</li>
+      <li>Kimball, R., &amp; Ross, M. <em>The Data Warehouse Toolkit</em>.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>OLTP, OLAP and Data Warehouse &copy; 2026</footer>
+
+</body>
+</html>
